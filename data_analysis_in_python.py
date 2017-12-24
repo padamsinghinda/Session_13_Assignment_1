@@ -59,7 +59,7 @@ def column_operations(df):
     Problem_5 :
     1. Create new column from a existing column.
     2. Use NaN for missing values.
-    3. Rename a column.
+    3. Drop a column.
     """
     
     max_len = max(map(lambda x : len(x), df['RecentDelays']))
@@ -71,7 +71,7 @@ def column_operations(df):
             except :
                 df_list.append(np.nan)
             df[f'delay_{i+1}'] = pd.DataFrame(df_list)
-    df.rename(columns={'RecentDelays' : 'Delays'}, inplace=True)
+    df.drop('RecentDelays', axis=1, inplace=True)
     return df
 
         

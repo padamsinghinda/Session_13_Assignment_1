@@ -45,8 +45,8 @@ def standardise_DataFrame(temp_df) :
 def add_drop_columns(df, temp_df) :
     """ 
     Problem_4 :
-    1. Drop a column
-    2. Merge temparory DataFrame with Original DataFrame. 
+    1. Delete a column from DataFrame
+    2. Prefrom merge in DataFrame df and temp_df. 
     """
     
     if 'From_To' in df.columns :
@@ -57,21 +57,25 @@ def add_drop_columns(df, temp_df) :
 def column_operations(df):
     """
     Problem_5 :
-    1. Create new column from a existing column.
+    1. Create new DataFrame delays using a existing column 'RecentDelays'.
+    2. Use column names as delay_1, delay_2... etc in DataFrame delays.
     2. Use NaN for missing values.
-    3. Drop a column.
+    3. Replace column 'RecentDelays' with DataFrame 'delays'.
     """
     
     max_len = max(map(lambda x : len(x), df['RecentDelays']))
+    delays = pd.DataFrame()
     for i in range(max_len) :
-        df_list = []
+        temp = 'delay_'+ str(i+1)
+        temp_list = []
         for j in range(df.shape[0]) :
             try :
-                df_list.append(df['RecentDelays'].iloc[j][i])
+                temp_list.append(df['RecentDelays'].iloc[j][i])
             except :
-                df_list.append(np.nan)
-            df[f'delay_{i+1}'] = pd.DataFrame(df_list)
+                temp_list.append(np.nan)
+        delays[temp] = temp_list
     df.drop('RecentDelays', axis=1, inplace=True)
+    df = pd.concat([df,delays], axis=1)
     return df
 
         
